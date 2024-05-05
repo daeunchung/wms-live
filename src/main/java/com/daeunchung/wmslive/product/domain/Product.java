@@ -52,6 +52,7 @@ public class Product {
     }
 
     private void validateConstructor(
+            // 작업자의 경우, API 요청값을 생성할 때는 jakarta 벨리데이션을 사용하고, 도메인 클래스를 생성할 때는 Spring Assert validator 를 사용한다고 함
             final String name,
             final String code,
             final String description,
