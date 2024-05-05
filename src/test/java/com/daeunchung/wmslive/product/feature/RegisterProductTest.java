@@ -32,8 +32,7 @@ class RegisterProductTest extends ApiTest {
 
         //given
 //        new RegisterProductApi().request();
-        Scenario.registerProduct().request()
-                .registerProduct().request();
+        Scenario.registerProduct().request();
 
         //then
         assertThat(productRepository.findAll()).hasSize(1);

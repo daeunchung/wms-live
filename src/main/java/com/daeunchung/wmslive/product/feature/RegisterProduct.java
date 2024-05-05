@@ -21,6 +21,12 @@ public class RegisterProduct {
     @PostMapping("/products")
     @ResponseStatus(HttpStatus.CREATED)
     public void request(@RequestBody final Request request) {
+        productRepository.findAll().stream()
+                .filter(product -> product.getCode().equals(request.code))
+                .findFirst()
+                .ifPresent(product -> {
+                    throw new IllegalArgumentException("이미 등록된 상품코드입니다.");
+                });
         final Product product = request.toDomain();
         productRepository.save(product);
     }

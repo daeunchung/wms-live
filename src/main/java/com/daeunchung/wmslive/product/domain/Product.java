@@ -8,28 +8,28 @@ import org.hibernate.annotations.Comment;
 import org.springframework.util.Assert;
 
 // In-memory -> H2 DB, Product class -> Entity
+@Getter
 @Entity
 @Table(name = "product")
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // 찾아봐
 @Comment("상품")
 public class Product {
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_no")
     @Comment("상품 번호")
     private Long productNo;
     @Column(name = "name", nullable = false)
-    @Comment("상품 번호")
+    @Comment("상품명")
     private String name;
     @Column(name = "code", nullable = false, unique = true)
-    @Comment("상품명")
+    @Comment("상품코드")
     private String code;
     @Column(name = "description", nullable = false)
-    @Comment("상품코드")
+    @Comment("상품설명")
     private String description;
     @Column(name = "brand", nullable = false)
-    @Comment("상품설명")
+    @Comment("브랜드")
     private String brand;
     @Column(name = "maker", nullable = false)
     @Comment("제조사")
@@ -48,7 +48,6 @@ public class Product {
     @Column(name = "weight_in_grams", nullable = false)
     @Comment("무게(그램)")
     private Long weightInGrams;
-
     @Embedded
     private ProductSize productSize;
 
