@@ -1,4 +1,4 @@
-package com.daeunchung.wmslive.product.feature;
+package com.daeunchung.wmslive.product.domain;
 
 import org.springframework.util.Assert;
 

@@ -1,4 +1,4 @@
-package com.daeunchung.wmslive.product.feature;
+package com.daeunchung.wmslive.product.domain;
 
 public enum TemperatureZone {
     ROOM_TEMPERATURE("상온");

@@ -1,5 +1,8 @@
 package com.daeunchung.wmslive.product.feature;
 
+import com.daeunchung.wmslive.product.domain.Category;
+import com.daeunchung.wmslive.product.domain.ProductRepository;
+import com.daeunchung.wmslive.product.domain.TemperatureZone;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
