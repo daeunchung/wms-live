@@ -1,18 +1,19 @@
 package com.daeunchung.wmslive.inbound.domain;
 
+import lombok.Getter;
 import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class Inbound {
+    @Getter
+    private Long id;
     private final String title;
     private final String description;
     private final LocalDateTime orderRequestedAt;
     private final LocalDateTime estimatedArrivalAt;
     private final List<InboundItem> inboundItems;
-    //        @lombok.Getter
-    private Long id;
 
     public Inbound(
             final String title,
@@ -31,10 +32,6 @@ public class Inbound {
         this.orderRequestedAt = orderRequestedAt;
         this.estimatedArrivalAt = estimatedArrivalAt;
         this.inboundItems = inboundItems;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     private void validateConstructor(
