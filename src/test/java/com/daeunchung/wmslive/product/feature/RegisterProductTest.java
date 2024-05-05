@@ -1,5 +1,6 @@
 package com.daeunchung.wmslive.product.feature;
 
+import com.daeunchung.wmslive.common.ApiTest;
 import com.daeunchung.wmslive.product.domain.Category;
 import com.daeunchung.wmslive.product.domain.ProductRepository;
 import com.daeunchung.wmslive.product.domain.TemperatureZone;
@@ -20,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * 실무에서는 레이어드 아키텍쳐 형태로 개발을 해야하지만, 예제 실습 코드라서 클래스 형태로 생성하겠습니다. 실무에서는 권장하지 않음을 기억해주세요
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class RegisterProductTest {
+class RegisterProductTest extends ApiTest {
     @LocalServerPort
     private int port;
     private RegisterProduct registerProduct;
