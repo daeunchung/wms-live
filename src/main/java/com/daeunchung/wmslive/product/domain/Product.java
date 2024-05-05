@@ -22,7 +22,7 @@ public class Product {
     @Column(name = "name", nullable = false)
     @Comment("상품명")
     private String name;
-    @Column(name = "code", nullable = false, unique = true)
+    @Column(name = "code", nullable = false, unique = true) // 상품코드는 UNIQUE
     @Comment("상품코드")
     private String code;
     @Column(name = "description", nullable = false)

@@ -21,14 +21,18 @@ public class RegisterProduct {
     @PostMapping("/products")
     @ResponseStatus(HttpStatus.CREATED)
     public void request(@RequestBody final Request request) {
-        productRepository.findAll().stream()
-                .filter(product -> product.getCode().equals(request.code))
-                .findFirst()
-                .ifPresent(product -> {
-                    throw new IllegalArgumentException("이미 등록된 상품코드입니다.");
-                });
+        validateProductCodeExists(request.code);
         final Product product = request.toDomain();
         productRepository.save(product);
+    }
+
+    private void validateProductCodeExists(final String code) {
+        productRepository.findAll().stream() // 상품이 적어서 최적화 안했음
+                .filter(product -> product.getCode().equals(code))
+                .findFirst()
+                .ifPresent(product -> {
+                    throw new IllegalArgumentException("이미 등록된 상품코드입니다. %s".formatted(code));
+                });
     }
 
     public record Request(
