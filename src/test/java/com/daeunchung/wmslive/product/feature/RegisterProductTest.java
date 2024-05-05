@@ -1,15 +1,12 @@
 package com.daeunchung.wmslive.product.feature;
 
 import com.daeunchung.wmslive.common.ApiTest;
+import com.daeunchung.wmslive.common.Scenario;
 import com.daeunchung.wmslive.product.domain.ProductRepository;
-import com.daeunchung.wmslive.product.feature.api.RegisterProductApi;
-import io.restassured.RestAssured;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,26 +16,25 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class RegisterProductTest extends ApiTest {
-    @LocalServerPort
-    private int port;
-    private RegisterProduct registerProduct;
     @Autowired
     private ProductRepository productRepository;
-
-    @BeforeEach
-    void setUp() {
-        if (RestAssured.UNDEFINED_PORT == RestAssured.port) {
-            RestAssured.port = port;
-        }
-        productRepository = new ProductRepository();
-        registerProduct = new RegisterProduct(productRepository);
-    }
 
     @Test
     @DisplayName("상품을 등록한다.")
     void registerProduct() {
+//        final RegisterProductApi registerProductApi = new RegisterProductApi();
+//        registerProductApi.code("CODE")
+//                .name("NAME")
+//                .widthInMillimeters(100L)
+//                .heightInMillimeters(100L)
+//                .lengthInMillimeters(100L)
+//                .request();
+
         //given
-        new RegisterProductApi().request();
+//        new RegisterProductApi().request();
+        Scenario.registerProduct().request()
+                .registerProduct().request();
+
         //then
         assertThat(productRepository.findAll()).hasSize(1);
     }

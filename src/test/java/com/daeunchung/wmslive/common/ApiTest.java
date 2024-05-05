@@ -17,5 +17,4 @@ public class ApiTest {
             RestAssured.port = port;
         }
     }
-
 }
