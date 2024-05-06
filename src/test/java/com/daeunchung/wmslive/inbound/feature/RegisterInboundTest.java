@@ -1,16 +1,18 @@
 package com.daeunchung.wmslive.inbound.feature;
 
 import com.daeunchung.wmslive.inbound.domain.InboundRepository;
-import com.daeunchung.wmslive.product.domain.*;
+import com.daeunchung.wmslive.product.domain.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
+import static com.daeunchung.wmslive.product.fixture.ProductFixture.aProduct;
+import static org.mockito.ArgumentMatchers.anyLong;
 
 class RegisterInboundTest {
 
@@ -28,24 +30,8 @@ class RegisterInboundTest {
     @Test
     @DisplayName("입고를 등록한다.")
     void registerInbound() {
-        final Product product = new Product(
-                "name",
-                "code",
-                "description",
-                "brand",
-                "maker",
-                "origin",
-                Category.ELECTRONICS,
-                TemperatureZone.ROOM_TEMPERATURE,
-                1000L,
-                new ProductSize(
-                        100L,
-                        100L,
-                        100L
-                )
-        );
-
-        Mockito.when(productRepository.findById(ArgumentMatchers.anyLong())).thenReturn(Optional.of(product));
+        Mockito.when(productRepository.findById(anyLong())) // anyLong() : [mockito] ArgumentMatchers
+                .thenReturn(Optional.of(aProduct().build()));
 
         final LocalDateTime orderRequestedAt = LocalDateTime.now();
         final LocalDateTime estimatedArrivalAt = LocalDateTime.now().plusDays(1);
@@ -68,4 +54,5 @@ class RegisterInboundTest {
         );
         registerInbound.request(request);
     }
+
 }
