@@ -1,23 +1,14 @@
 package com.daeunchung.wmslive.inbound.feature;
 
 import com.daeunchung.wmslive.common.ApiTest;
+import com.daeunchung.wmslive.common.Scenario;
 import com.daeunchung.wmslive.inbound.domain.InboundRepository;
 import com.daeunchung.wmslive.product.domain.ProductRepository;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
-import java.time.LocalDateTime;
-import java.util.List;
-
-import static com.daeunchung.wmslive.product.fixture.ProductFixture.aProduct;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.springframework.http.HttpStatus.CREATED;
 
 class RegisterInboundTest extends ApiTest { // 7.API TEST 로 변경
 
@@ -41,40 +32,15 @@ class RegisterInboundTest extends ApiTest { // 7.API TEST 로 변경
     void registerInbound() {
 //        Mockito.when(productRepository.findById(anyLong())) // anyLong() : [mockito] ArgumentMatchers
 //                .thenReturn(Optional.of(aProduct().build()));
-        Mockito.when(productRepository.getBy(anyLong()))
-                .thenReturn(aProduct().build());
+//        Mockito.when(productRepository.getBy(anyLong()))
+//                .thenReturn(aProduct().build());
 
-        final LocalDateTime orderRequestedAt = LocalDateTime.now();
-        final LocalDateTime estimatedArrivalAt = LocalDateTime.now().plusDays(1);
-        final Long productNo = 1L;
-        final Long quantity = 1L;
-        final Long unitPrice = 1500L;
-        final RegisterInbound.Request.Item inboundItem = new RegisterInbound.Request.Item(
-                productNo,
-                quantity,
-                unitPrice,
-                "description"
-        );
-        final List<RegisterInbound.Request.Item> inboundItems = List.of(inboundItem);
-        final RegisterInbound.Request request = new RegisterInbound.Request(
-                "title",
-                "description",
-                orderRequestedAt,
-                estimatedArrivalAt,
-                inboundItems
-        );
+        // 시나리오 기반 테스트로 변경 (기존애 mock repository 객체를 사용하다가, 시나리오 테스트때는 실제 요청을 생성해서 DB 스프링 빈에 등록된 repository 객체를 통해 읽고 쓰도록 한다)
+        Scenario.registerProduct().request()
+                .registerInbound().request();
 
-        RestAssured.given().log().all() // HTTP 요청이 콘솔에 찍히도록 설정한다
-                .contentType(ContentType.JSON)
-                .body(request)
-                .when()
-                .post("/inbounds")
-                .then().log().all().statusCode(CREATED.value());
-
-//        registerInbound.request(request); // ApiTest 로 변경
-
+//        registerInbound.request(request); // 서비스 요청 -> ApiTest 로 변경 -> Scenario Test 로 변경
         // 검증
         Assertions.assertThat(inboundRepository.findAll()).hasSize(1);
     }
-
 }
